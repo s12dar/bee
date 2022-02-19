@@ -1,6 +1,6 @@
 package com.lyvetech.bee.feature.data.remote.dto
 
-import com.lyvetech.bee.feature.domain.model.WordInfo
+import com.lyvetech.bee.feature.data.local.entity.WordInfoEntity
 
 data class WordInfoDto(
     val meanings: List<MeaningDto>,
@@ -9,8 +9,8 @@ data class WordInfoDto(
     val phonetics: List<PhoneticDto>,
     val word: String
 ) {
-    fun toWorldInfo(): WordInfo {
-        return WordInfo(
+    fun toWorldInfoEntity(): WordInfoEntity {
+        return WordInfoEntity(
             meanings = meanings.map { it.toMeaning() },
             origin = origin,
             phonetic = phonetic,
