@@ -21,10 +21,10 @@ class WordInfoViewModel @Inject constructor(
     private val getWordInfo: GetWordInfo
 ) : ViewModel() {
     private val _searchQuery = mutableStateOf("")
-    val searchQueury: State<String> = _searchQuery
+    val searchQuery: State<String> = _searchQuery
 
-    private val _wordInfoState = mutableStateOf(WordInfoState())
-    private val wordInfoState: State<WordInfoState> = _wordInfoState
+    private val _state = mutableStateOf(WordInfoState())
+    val state: State<WordInfoState> = _state
 
     private val _eventFlow = MutableSharedFlow<UIEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -40,24 +40,24 @@ class WordInfoViewModel @Inject constructor(
                 .onEach { result ->
                     when (result) {
                         is Resource.Success -> {
-                            _wordInfoState.value = wordInfoState.value.copy(
+                            _state.value = state.value.copy(
                                 wordInfoItems = result.data ?: emptyList(),
                                 isLoading = false
                             )
                         }
                         is Resource.Error -> {
-                            _wordInfoState.value = wordInfoState.value.copy(
+                            _state.value = state.value.copy(
                                 wordInfoItems = result.data ?: emptyList(),
                                 isLoading = false
                             )
                             _eventFlow.emit(
-                                UIEvent.ShowSnackBar(
+                                UIEvent.ShowSnackbar(
                                     result.message ?: "Unknown error"
                                 )
                             )
                         }
                         is Resource.Loading -> {
-                            _wordInfoState.value = wordInfoState.value.copy(
+                            _state.value = state.value.copy(
                                 wordInfoItems = result.data ?: emptyList(),
                                 isLoading = true
                             )
@@ -68,6 +68,6 @@ class WordInfoViewModel @Inject constructor(
     }
 
     sealed class UIEvent {
-        data class ShowSnackBar(val message: String) : UIEvent()
+        data class ShowSnackbar(val message: String) : UIEvent()
     }
 }

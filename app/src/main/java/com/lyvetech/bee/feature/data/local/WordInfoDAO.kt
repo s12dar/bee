@@ -8,7 +8,6 @@ import com.lyvetech.bee.feature.data.local.entity.WordInfoEntity
 
 @Dao
 interface WordInfoDAO {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWordInfos(infos: List<WordInfoEntity>)
 

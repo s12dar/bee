@@ -12,6 +12,6 @@ interface DictionaryApi {
     ): List<WordInfoDto>
 
     companion object {
-        const val BASE_URL = "https://api.dictionaryapi.dev"
+        const val BASE_URL = "https://api.dictionaryapi.dev/"
     }
 }

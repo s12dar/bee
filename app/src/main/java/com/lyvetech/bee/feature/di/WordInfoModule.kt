@@ -3,9 +3,9 @@ package com.lyvetech.bee.feature.di
 import android.app.Application
 import androidx.room.Room
 import com.google.gson.Gson
-import com.lyvetech.bee.feature.data.local.entity.WordInfoDatabase
+import com.lyvetech.bee.feature.data.local.Converters
+import com.lyvetech.bee.feature.data.local.WordInfoDatabase
 import com.lyvetech.bee.feature.data.remote.DictionaryApi
-import com.lyvetech.bee.feature.data.remote.DictionaryApi.Companion.BASE_URL
 import com.lyvetech.bee.feature.data.repository.WordInfoRepositoryImpl
 import com.lyvetech.bee.feature.data.util.GsonParser
 import com.lyvetech.bee.feature.domain.repository.WordInfoRepository
@@ -42,7 +42,8 @@ object WordInfoModule {
     fun providesWordInfoDatabase(app: Application): WordInfoDatabase {
         return Room.databaseBuilder(
             app, WordInfoDatabase::class.java, "word_db"
-        ).addTypeConverter(GsonParser(Gson()))
+        ).addTypeConverter(Converters(GsonParser(Gson())))
+            .fallbackToDestructiveMigration()
             .build()
     }
 
@@ -50,10 +51,9 @@ object WordInfoModule {
     @Singleton
     fun providesDictionaryApi(): DictionaryApi {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(DictionaryApi.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(DictionaryApi::class.java)
     }
-
 }
