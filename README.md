@@ -1,6 +1,6 @@
 
 ## Bee 🐝
-Bee is simple dictionary application using clean architecture guideline with local database cache.
+Bee is simple dictionary application using clean architecture approach with local database caching.
 
 ## Tech stack 🏗
 * [Kotlin](https://kotlinlang.org/)
