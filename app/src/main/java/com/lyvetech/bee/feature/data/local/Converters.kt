@@ -13,7 +13,7 @@ class Converters(
     @TypeConverter
     fun fromMeaningJson(json: String): List<Meaning> {
         return jsonParser.fromJson<ArrayList<Meaning>>(
-            json,
+            json, 
             object : TypeToken<ArrayList<Meaning>>(){}.type
         ) ?: emptyList()
     }
